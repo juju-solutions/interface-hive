@@ -1,4 +1,4 @@
-name: spark
-summary: Interface for relating to Apache Spark
+name: flink
+summary: Interface for relating to Apache Flink
 version: 1
 maintainer: "Big Data Team <bigdata@lists.ubuntu.com>"

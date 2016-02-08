@@ -16,24 +16,24 @@ from charms.reactive import hook
 from charms.reactive import scopes
 
 
-class SparkRequires(RelationBase):
+class FlinkRequires(RelationBase):
     scope = scopes.GLOBAL
 
     def installed(self):
         return self.get_remote('installed', 'false').lower() == 'true'
 
-    @hook('{requires:spark}-relation-joined')
+    @hook('{requires:flink}-relation-joined')
     def joined(self):
         conv = self.conversation()
         conv.set_state('{relation_name}.related')
 
-    @hook('{requires:spark}-relation-changed')
+    @hook('{requires:flink}-relation-changed')
     def changed(self):
         conv = self.conversation()
         if self.installed():
             conv.set_state('{relation_name}.available')
 
-    @hook('{provides:spark}-relation-departed')
+    @hook('{provides:flink}-relation-departed')
     def departed(self):
         conv = self.conversation()
         conv.remove_state('{relation_name}.related')
