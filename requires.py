@@ -10,31 +10,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import json
 from charms.reactive import RelationBase
 from charms.reactive import hook
 from charms.reactive import scopes
 
 
-class FlinkRequires(RelationBase):
+class HiveRequires(RelationBase):
     scope = scopes.GLOBAL
 
-    def installed(self):
-        return self.get_remote('installed', 'false').lower() == 'true'
+    def set_ready(self):
+        return self.get_remote('ready', 'false').lower() == 'true'
 
-    @hook('{requires:flink}-relation-joined')
+    @hook('{requires:hive}-relation-joined')
     def joined(self):
         conv = self.conversation()
-        conv.set_state('{relation_name}.related')
+        conv.set_state('{relation_name}.joined')
 
-    @hook('{requires:flink}-relation-changed')
+    @hook('{requires:hive}-relation-changed')
     def changed(self):
         conv = self.conversation()
-        if self.installed():
-            conv.set_state('{relation_name}.available')
+        if self.set_ready():
+            conv.set_state('{relation_name}.ready')
 
-    @hook('{provides:flink}-relation-departed')
+    @hook('{provides:hive}-relation-departed')
     def departed(self):
         conv = self.conversation()
-        conv.remove_state('{relation_name}.related')
-        conv.remove_state('{relation_name}.available')
+        conv.remove_state('{relation_name}.joined')
+        conv.remove_state('{relation_name}.ready')
+
+    def get_hostname(self):
+        conv = self.conversation()
+        return conv.get_remote('private-address')
+
+    def get_port(self):
+        conv = self.conversation()
+        return conv.get_remote('port')

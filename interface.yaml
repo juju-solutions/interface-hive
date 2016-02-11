@@ -1,4 +1,4 @@
-name: flink
-summary: Interface for relating to Apache Flink
+name: hive 
+summary: Interface for relating to Apache Hive
 version: 1
 maintainer: "Big Data Team <bigdata@lists.ubuntu.com>"
