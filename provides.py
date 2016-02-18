@@ -39,9 +39,8 @@ class HiveProvides(RelationBase):
     def clear_ready(self):
         self.set_remote('ready', False)
 
-    def send_port(self, port):        
+    def send_port(self, port):
         conv = self.conversation()
         conv.set_remote(data={
             'port': port,
         })
-

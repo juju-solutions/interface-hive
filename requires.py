@@ -18,7 +18,7 @@ from charms.reactive import scopes
 class HiveRequires(RelationBase):
     scope = scopes.GLOBAL
 
-    def set_ready(self):
+    def is_ready(self):
         return self.get_remote('ready', 'false').lower() == 'true'
 
     @hook('{requires:hive}-relation-joined')
@@ -29,7 +29,7 @@ class HiveRequires(RelationBase):
     @hook('{requires:hive}-relation-changed')
     def changed(self):
         conv = self.conversation()
-        if self.set_ready():
+        if self.is_ready() and self.get_port() is not None:
             conv.set_state('{relation_name}.ready')
 
     @hook('{provides:hive}-relation-departed')
@@ -38,7 +38,7 @@ class HiveRequires(RelationBase):
         conv.remove_state('{relation_name}.joined')
         conv.remove_state('{relation_name}.ready')
 
-    def get_hostname(self):
+    def get_private_ip(self):
         conv = self.conversation()
         return conv.get_remote('private-address')
 
