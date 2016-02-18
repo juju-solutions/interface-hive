@@ -21,8 +21,6 @@ The Hive provider can signal its availability through the following methods:
 
   * `send_port()` Sends port over relation
 
-  * `send_hostname()` Sends hostname over relation
-
 An example of a charm using this interface would be:
 
 ```python
