@@ -26,7 +26,7 @@ class HiveProvides(RelationBase):
         conv = self.conversation()
         conv.set_state('{relation_name}.joined')
 
-    @hook('{requires:hive}-relation-departed')
+    @hook('{provides:hive}-relation-departed')
     def departed(self):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')

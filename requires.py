@@ -32,7 +32,7 @@ class HiveRequires(RelationBase):
         if self.is_ready() and self.get_port() is not None:
             conv.set_state('{relation_name}.ready')
 
-    @hook('{provides:hive}-relation-departed')
+    @hook('{requires:hive}-relation-departed')
     def departed(self):
         conv = self.conversation()
         conv.remove_state('{relation_name}.joined')
